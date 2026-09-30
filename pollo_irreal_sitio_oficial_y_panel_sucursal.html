@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POLLO IRREAL - Sitio Oficial & Panel Sucursal Centro</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        irreal: {
+                            orange: '#ff5500',
+                            fire: '#ff3300',
+                            gold: '#ffaa00',
+                            darkBg: '#0f0e0e',
+                            cardBg: '#181717',
+                            border: '#2a2828',
+                            hoverBg: '#222020'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f0e0e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2828;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff5500;
+        }
+        .glow-orange {
+            box-shadow: 0 0 20px rgba(255, 85, 0, 0.35);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #ffaa00, #ff5500, #ff3300);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .grid-pattern {
+            background-image: radial-gradient(#ff5500 0.75px, transparent 0.75px);
+            background-size: 24px 24px;
+            opacity: 0.08;
+        }
+    </style>
+</head>
+<body class="bg-irreal-darkBg text-gray-200 font-sans antialiased min-h-screen flex flex-col selection:bg-irreal-orange selection:text-white">
+
+    <!-- HEADER GENERAL -->
+    <header class="bg-irreal-cardBg/90 backdrop-blur-md border-b border-irreal-border sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Brand Logo -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="showPublicSite()">
+                <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-irreal-fire to-irreal-gold flex items-center justify-center font-black text-black text-2xl shadow-lg shadow-orange-950">
+                    <i class="fa-solid fa-fire text-black"></i>
+                </div>
+                <div>
+                    <h1 class="font-black text-xl tracking-wider text-gradient uppercase leading-none">POLLO IRREAL</h1>
+                    <span class="text-[10px] text-gray-400 font-bold tracking-widest block uppercase mt-1">¡SABOR ASADO DE VERDAD!</span>
+                </div>
+            </div>
+
+            <!-- Public Navigation Links -->
+            <nav id="publicNavLinks" class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-300">
+                <a href="#hero" onclick="scrollToSection('hero')" class="hover:text-irreal-orange transition-colors">Inicio</a>
+                <a href="#menu" onclick="scrollToSection('menu')" class="hover:text-irreal-orange transition-colors">Menú</a>
+                <a href="#paquetes" onclick="scrollToSection('paquetes')" class="hover:text-irreal-orange transition-colors">Paquetes</a>
+                <a href="#contacto" onclick="scrollToSection('contacto')" class="hover:text-irreal-orange transition-colors">Contacto</a>
+            </nav>
+
+            <!-- Action Controls -->
+            <div class="flex items-center space-x-3">
+                <!-- Cart Button (Public) -->
+                <button id="publicCartBtn" onclick="toggleCartModal()" class="relative bg-irreal-border hover:bg-irreal-hoverBg p-2.5 rounded-xl text-gray-300 hover:text-white transition-all">
+                    <i class="fa-solid fa-cart-shopping text-lg"></i>
+                    <span id="cartBadgeCount" class="absolute -top-1.5 -right-1.5 bg-irreal-orange text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center shadow-md">0</span>
+                </button>
+
+                <!-- Switch View Button -->
+                <button id="viewSwitchBtn" onclick="toggleMainView()" class="bg-gradient-to-r from-irreal-orange to-irreal-fire text-white font-bold text-xs px-4 py-2.5 rounded-xl hover:brightness-110 transition-all flex items-center gap-2 shadow-lg shadow-orange-950/50">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <span id="viewSwitchText">Panel Sucursal</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================================================================= -->
+    <!-- VIEW 1: SITIO WEB DEL CLIENTE -->
+    <!-- ================================================================= -->
+    <div id="publicWebsiteView" class="flex-1 flex flex-col">
+        
+        <!-- HERO SECTION -->
+        <section id="hero" class="relative py-16 lg:py-24 overflow-hidden border-b border-irreal-border">
+            <div class="absolute inset-0 grid-pattern pointer-events-none"></div>
+            <div class="absolute top-1/4 left-10 w-96 h-96 bg-irreal-orange/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 bg-irreal-orange/10 border border-irreal-orange/30 text-irreal-gold text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                        <span class="w-2 h-2 rounded-full bg-irreal-orange animate-pulse"></span>
+                        SABOR 100% ASADO AL CARBÓN
+                    </div>
+
+                    <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white uppercase leading-none">
+                        ¡POLLO IRREAL:<br>
+                        <span class="text-gradient">COCINANDO LO INCREÍBLE!</span>
+                    </h1>
+
+                    <p class="text-gray-400 text-sm sm:text-base max-w-xl leading-relaxed">
+                        Prueba el sabor único de nuestro pollo marinado con especias secretas y asado lentamente al carbón. Crujiente por fuera y jugoso por dentro.
+                    </p>
+
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+                        <button onclick="scrollToSection('menu')" class="bg-gradient-to-r from-irreal-orange to-irreal-fire text-white font-bold px-6 py-3.5 rounded-xl hover:brightness-110 transition-all shadow-lg shadow-orange-950 flex items-center gap-2">
+                            <i class="fa-solid fa-utensils"></i> Explorar Menú
+                        </button>
+                        <button onclick="scrollToSection('paquetes')" class="border border-irreal-border hover:border-irreal-orange bg-irreal-cardBg text-irreal-gold font-bold px-6 py-3.5 rounded-xl hover:bg-irreal-hoverBg transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-box-open"></i> Ver Paquetes
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 pt-8 border-t border-irreal-border max-w-md mx-auto lg:mx-0">
+                        <div>
+                            <div class="font-black text-xl text-white">100%</div>
+                            <div class="text-xs text-gray-400">Al Carbón</div>
+                        </div>
+                        <div>
+                            <div class="font-black text-xl text-white">30 Min</div>
+                            <div class="text-xs text-gray-400">Envío Rápido</div>
+                        </div>
+                        <div>
+                            <div class="font-black text-xl text-irreal-gold"><i class="fa-solid fa-star text-xs"></i> 4.9</div>
+                            <div class="text-xs text-gray-400">Excelente Sabor</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="bg-irreal-cardBg border border-irreal-border rounded-3xl p-4 shadow-2xl relative max-w-md w-full glow-orange">
+                        <div class="relative rounded-2xl overflow-hidden aspect-video bg-black/60 mb-4">
+                            <img src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=800&q=80" alt="Pollo Entero al Carbón" class="w-full h-full object-cover">
+                            <div class="absolute top-3 left-3 bg-gradient-to-r from-irreal-fire to-irreal-orange text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider">
+                                <i class="fa-solid fa-fire mr-1"></i> ESPECIALIDAD DE LA CASA
+                            </div>
+                        </div>
+                        <div class="p-2">
+                            <h3 class="text-xl font-bold text-white">Pollo Entero al Carbón</h3>
+                            <p class="text-xs text-gray-400 mt-1">Incluye cebollitas asadas, chiles toreados, tortillas y salsa especial.</p>
+                            <div class="mt-4 flex items-center justify-between">
+                                <span class="text-2xl font-black text-irreal-gold">$220.00 MXN</span>
+                                <button onclick="addToPublicCart('Pollo Entero al Carbón', 220.00)" class="bg-irreal-orange hover:bg-irreal-fire text-white px-4 py-2 rounded-xl font-bold text-xs transition-all flex items-center gap-1.5">
+                                    <i class="fa-solid fa-plus"></i> Agregar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE MENÚ -->
+        <section id="menu" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 w-full">
+            <div class="text-center space-y-2">
+                <span class="text-xs font-bold text-irreal-orange uppercase tracking-widest">Nuestra Carta</span>
+                <h2 class="text-3xl font-black text-white uppercase">Menú de la Sucursal Centro</h2>
+                <p class="text-xs text-gray-400">Precios reales preparados al momento para llevar o pedir a domicilio</p>
+            </div>
+
+            <!-- Categorías -->
+            <div class="flex justify-center gap-2 overflow-x-auto pb-2">
+                <button onclick="filterPublicMenu('ALL')" class="menu-cat-btn bg-irreal-orange text-white text-xs font-bold px-5 py-2.5 rounded-xl transition-all">Todos</button>
+                <button onclick="filterPublicMenu('Pollos')" class="menu-cat-btn bg-irreal-cardBg text-gray-400 hover:text-white text-xs font-bold px-5 py-2.5 rounded-xl border border-irreal-border transition-all">Pollos</button>
+                <button onclick="filterPublicMenu('Paquetes')" class="menu-cat-btn bg-irreal-cardBg text-gray-400 hover:text-white text-xs font-bold px-5 py-2.5 rounded-xl border border-irreal-border transition-all">Paquetes</button>
+                <button onclick="filterPublicMenu('Complementos')" class="menu-cat-btn bg-irreal-cardBg text-gray-400 hover:text-white text-xs font-bold px-5 py-2.5 rounded-xl border border-irreal-border transition-all">Complementos</button>
+                <button onclick="filterPublicMenu('Bebidas')" class="menu-cat-btn bg-irreal-cardBg text-gray-400 hover:text-white text-xs font-bold px-5 py-2.5 rounded-xl border border-irreal-border transition-all">Bebidas</button>
+            </div>
+
+            <!-- Grilla de Menú -->
+            <div id="publicMenuGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Se llena por JavaScript -->
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer id="contacto" class="bg-black border-t border-irreal-border mt-auto py-8 text-center text-xs text-gray-500 space-y-2">
+            <div class="font-black text-irreal-orange tracking-widest uppercase">POLLO IRREAL - SUCURSAL CENTRO</div>
+            <p>Atención Local: Av. Principal #123, Centro. Teléfono: (555) 019-2834</p>
+            <p>© 2026 Pollo Irreal. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- VIEW 2: PANEL DE ADMINISTRACIÓN (SUCURSAL CENTRO) -->
+    <!-- ================================================================= -->
+    <div id="adminPanelPage" class="hidden flex-1 flex flex-col md:flex-row">
+        
+        <!-- SIDEBAR DE PANEL -->
+        <aside id="sidebar" class="w-full md:w-64 bg-irreal-cardBg border-b md:border-b-0 md:border-r border-irreal-border flex-shrink-0 flex flex-col">
+            
+            <!-- Sucursal Header -->
+            <div class="p-4 border-b border-irreal-border bg-black/40">
+                <div class="text-[10px] uppercase font-bold text-gray-500 tracking-wider">Sucursal Operativa</div>
+                <div class="flex items-center gap-2 mt-1">
+                    <i class="fa-solid fa-location-dot text-irreal-fire"></i>
+                    <span class="font-black text-white text-sm">SUCURSAL CENTRO</span>
+                </div>
+            </div>
+
+            <!-- Role Selector -->
+            <div class="p-4 border-b border-irreal-border bg-irreal-hoverBg/50">
+                <label class="block text-[10px] font-bold text-irreal-gold uppercase mb-1 flex items-center gap-1">
+                    <i class="fa-solid fa-user-gear"></i> SIMULAR PERMISO DE ROL:
+                </label>
+                <select id="adminRoleSelector" onchange="applyRolePermissions()" class="w-full bg-black border border-irreal-orange text-white text-xs font-bold px-3 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-irreal-orange cursor-pointer">
+                    <option value="ADMIN">ADMINISTRADOR (Acceso Total)</option>
+                    <option value="VENDEDOR">VENDEDOR / CAJERO (Ventas y POS)</option>
+                    <option value="ALMACENISTA">ALMACENISTA (Inventario)</option>
+                </select>
+
+                <!-- Indicator Badge of active permissions -->
+                <div id="roleInfoBadge" class="mt-2 text-[11px] p-2 rounded-lg bg-black/60 border border-irreal-border text-gray-300">
+                    <!-- Updated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Dynamic Navigation Links per Role -->
+            <nav class="p-3 space-y-1 text-xs font-semibold flex-1">
+                <a href="#stats" onclick="switchAdminTab('stats')" id="adminNav-stats" class="admin-tab-nav role-nav-item role-nav-admin flex items-center space-x-3 px-3.5 py-3 rounded-xl transition-all bg-gradient-to-r from-irreal-orange/20 to-transparent text-irreal-gold border-l-4 border-irreal-orange">
+                    <i class="fa-solid fa-chart-pie w-5 text-center"></i>
+                    <span>Estadísticas Financieras</span>
+                </a>
+
+                <a href="#sales" onclick="switchAdminTab('sales')" id="adminNav-sales" class="admin-tab-nav role-nav-item role-nav-admin role-nav-vendedor flex items-center space-x-3 px-3.5 py-3 rounded-xl transition-all text-gray-400 hover:text-white hover:bg-irreal-hoverBg">
+                    <i class="fa-solid fa-receipt w-5 text-center"></i>
+                    <span>Control de Ventas y Pedidos</span>
+                </a>
+
+                <a href="#inventory" onclick="switchAdminTab('inventory')" id="adminNav-inventory" class="admin-tab-nav role-nav-item role-nav-admin role-nav-almacenista flex items-center space-x-3 px-3.5 py-3 rounded-xl transition-all text-gray-400 hover:text-white hover:bg-irreal-hoverBg">
+                    <i class="fa-solid fa-boxes-stacked w-5 text-center"></i>
+                    <span>Control de Inventario</span>
+                </a>
+
+                <a href="#users" onclick="switchAdminTab('users')" id="adminNav-users" class="admin-tab-nav role-nav-item role-nav-admin flex items-center space-x-3 px-3.5 py-3 rounded-xl transition-all text-gray-400 hover:text-white hover:bg-irreal-hoverBg">
+                    <i class="fa-solid fa-users-gear w-5 text-center"></i>
+                    <span>Personal de Sucursal</span>
+                </a>
+
+                <button id="posNavBtn" onclick="openPOSModal()" class="role-nav-item role-nav-admin role-nav-vendedor w-full mt-4 bg-gradient-to-r from-irreal-orange to-irreal-fire text-white font-bold p-3 rounded-xl hover:brightness-110 transition-all flex items-center justify-center gap-2 shadow-lg shadow-orange-950">
+                    <i class="fa-solid fa-cash-register"></i> Caja Express / POS
+                </button>
+            </nav>
+
+            <div class="p-4 border-t border-irreal-border text-[11px] text-gray-500 bg-black/20">
+                <span>Sucursal Centro v2.5</span>
+            </div>
+        </aside>
+
+        <!-- ÁREA PRINCIPAL DEL PANEL -->
+        <main class="flex-1 p-4 sm:p-6 overflow-y-auto space-y-6">
+            
+            <!-- AVISO DE ACCESO RESTRINGIDO (SI APLICA) -->
+            <div id="roleAccessBanner" class="hidden bg-amber-500/10 border border-amber-500/30 p-3 rounded-xl text-xs text-amber-300 flex items-center gap-2">
+                <i class="fa-solid fa-shield-halved text-amber-400 text-sm"></i>
+                <span id="roleAccessBannerText">Modo de acceso activo</span>
+            </div>
+
+            <!-- SECCIÓN 1: ESTADÍSTICAS (SÓLO ADMINISTRADOR) -->
+            <section id="adminSec-stats" class="admin-section space-y-6">
+                <!-- Filtros de Período -->
+                <div class="bg-irreal-cardBg p-4 rounded-2xl border border-irreal-border flex flex-wrap items-center justify-between gap-4">
+                    <div>
+                        <h3 class="font-bold text-white text-base">Rendimiento Financiero Real - Sucursal Centro</h3>
+                        <p class="text-xs text-gray-400">Selecciona el periodo para revisar las ventas de la sucursal</p>
+                    </div>
+
+                    <div class="bg-black/50 p-1 rounded-xl border border-irreal-border flex text-xs font-semibold">
+                        <button onclick="setAdminPeriod('daily')" id="btn-period-daily" class="px-3.5 py-1.5 rounded-lg text-white bg-irreal-orange transition-all">Diario</button>
+                        <button onclick="setAdminPeriod('weekly')" id="btn-period-weekly" class="px-3.5 py-1.5 rounded-lg text-gray-400 hover:text-white transition-all">Semanal</button>
+                        <button onclick="setAdminPeriod('monthly')" id="btn-period-monthly" class="px-3.5 py-1.5 rounded-lg text-gray-400 hover:text-white transition-all">Mensual</button>
+                    </div>
+                </div>
+
+                <!-- CARDS DE METRICAS REALISTAS -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-irreal-cardBg p-5 rounded-2xl border border-irreal-border">
+                        <p class="text-xs text-gray-400 uppercase font-semibold">Ventas Totales</p>
+                        <h4 id="kpiSalesTotal" class="text-2xl font-black text-white mt-1">$3,450.00 MXN</h4>
+                        <div id="kpiSalesSubtext" class="mt-2 text-xs text-emerald-400"><i class="fa-solid fa-circle-check"></i> Cierre estimado del día</div>
+                    </div>
+
+                    <div class="bg-irreal-cardBg p-5 rounded-2xl border border-irreal-border">
+                        <p class="text-xs text-gray-400 uppercase font-semibold">Pedidos Realizados</p>
+                        <h4 id="kpiOrdersCount" class="text-2xl font-black text-white mt-1">18 Pedidos</h4>
+                        <div class="mt-2 text-xs text-gray-400">Promedio de la jornada</div>
+                    </div>
+
+                    <div class="bg-irreal-cardBg p-5 rounded-2xl border border-irreal-border">
+                        <p class="text-xs text-gray-400 uppercase font-semibold">Ticket Promedio</p>
+                        <h4 id="kpiTicketAvg" class="text-2xl font-black text-white mt-1">$191.66 MXN</h4>
+                        <div class="mt-2 text-xs text-gray-400">Por consumo de cliente</div>
+                    </div>
+
+                    <div class="bg-irreal-cardBg p-5 rounded-2xl border border-irreal-border">
+                        <p class="text-xs text-gray-400 uppercase font-semibold">Producto Top</p>
+                        <h4 id="kpiTopSeller" class="text-lg font-bold text-irreal-gold mt-1 truncate">Pollo Entero al Carbón</h4>
+                        <div id="kpiTopSubtext" class="mt-2 text-xs text-gray-400">11 unidades vendidas</div>
+                    </div>
+                </div>
+
+                <!-- GRÁFICOS -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 bg-irreal-cardBg p-5 rounded-2xl border border-irreal-border">
+                        <h4 id="chartTitle" class="font-bold text-white text-sm mb-4">Comportamiento de Ventas Diarias ($ MXN)</h4>
+                        <div class="h-64 relative">
+                            <canvas id="branchSalesChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-irreal-cardBg p-5 rounded-2xl border border-irreal-border">
+                        <h4 class="font-bold text-white text-sm mb-4">Distribución por Categoría</h4>
+                        <div class="h-64 relative flex items-center justify-center">
+                            <canvas id="branchCategoryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 2: CONTROL DE VENTAS Y PEDIDOS (ADMIN Y VENDEDOR) -->
+            <section id="adminSec-sales" class="admin-section hidden space-y-6">
+                <div class="bg-irreal-cardBg p-4 rounded-2xl border border-irreal-border flex flex-wrap justify-between items-center gap-4">
+                    <div>
+                        <h3 class="font-bold text-white text-sm">Registro de Pedidos y Ventas del Día</h3>
+                        <p class="text-xs text-gray-400">Atención de mostrador y pedidos en línea</p>
+                    </div>
+                    <button onclick="openPOSModal()" class="bg-gradient-to-r from-irreal-orange to-irreal-fire text-white text-xs font-bold px-4 py-2.5 rounded-xl hover:brightness-110 flex items-center gap-2">
+                        <i class="fa-solid fa-plus-circle"></i> Nueva Venta en Caja (POS)
+                    </button>
+                </div>
+
+                <div class="bg-irreal-cardBg rounded-2xl border border-irreal-border overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-gray-300">
+                            <thead class="bg-black/60 text-gray-400 font-bold uppercase text-[10px] tracking-wider border-b border-irreal-border">
+                                <tr>
+                                    <th class="p-4">Folio</th>
+                                    <th class="p-4">Hora</th>
+                                    <th class="p-4">Cliente</th>
+                                    <th class="p-4">Canal</th>
+                                    <th class="p-4">Total</th>
+                                    <th class="p-4">Estado</th>
+                                    <th class="p-4 text-right">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="salesTableBody" class="divide-y divide-irreal-border">
+                                <!-- Filas Dinámicas -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 3: CONTROL DE INVENTARIO (ADMIN Y ALMACENISTA) -->
+            <section id="adminSec-inventory" class="admin-section hidden space-y-6">
+                <div class="bg-irreal-cardBg p-4 rounded-2xl border border-irreal-border flex flex-wrap items-center justify-between gap-4">
+                    <div>
+                        <h3 class="font-bold text-white text-sm">Control de Stock e Insumos</h3>
+                        <p class="text-xs text-gray-400">Monitoreo y reabastecimiento en Sucursal Centro</p>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <input type="text" id="invSearchInput" onkeyup="renderInventoryTable()" placeholder="Buscar insumo..." class="bg-black/50 border border-irreal-border text-xs text-white px-3 py-2 rounded-xl focus:outline-none focus:border-irreal-orange w-48 sm:w-64">
+                    </div>
+                </div>
+
+                <div class="bg-irreal-cardBg rounded-2xl border border-irreal-border overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-gray-300">
+                            <thead class="bg-black/60 text-gray-400 font-bold uppercase text-[10px] tracking-wider border-b border-irreal-border">
+                                <tr>
+                                    <th class="p-4">SKU</th>
+                                    <th class="p-4">Producto / Insumo</th>
+                                    <th class="p-4">Categoría</th>
+                                    <th class="p-4">Precio Lista</th>
+                                    <th class="p-4 text-center">Stock Actual</th>
+                                    <th class="p-4 text-center">Stock Mínimo</th>
+                                    <th class="p-4">Estado</th>
+                                    <th class="p-4 text-right">Ajustar Stock</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventoryTableBody" class="divide-y divide-irreal-border">
+                                <!-- Filas dinámicas -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 4: PERSONAL (SÓLO ADMINISTRADOR) -->
+            <section id="adminSec-users" class="admin-section hidden space-y-6">
+                <div class="bg-irreal-cardBg p-4 rounded-2xl border border-irreal-border flex justify-between items-center">
+                    <div>
+                        <h3 class="font-bold text-white text-sm">Personal Registrado - Sucursal Centro</h3>
+                        <p class="text-xs text-gray-400">Administración de usuarios y turnos</p>
+                    </div>
+                    <button onclick="alert('Función para agregar empleados')" class="bg-irreal-orange text-white text-xs font-bold px-4 py-2 rounded-xl hover:bg-irreal-fire">
+                        <i class="fa-solid fa-user-plus mr-1"></i> Registrar Empleado
+                    </button>
+                </div>
+
+                <div class="bg-irreal-cardBg rounded-2xl border border-irreal-border overflow-hidden">
+                    <table class="w-full text-left text-xs text-gray-300">
+                        <thead class="bg-black/60 text-gray-400 font-bold uppercase text-[10px] tracking-wider border-b border-irreal-border">
+                            <tr>
+                                <th class="p-4">Nombre</th>
+                                <th class="p-4">Correo Electrónico</th>
+                                <th class="p-4">Rol Asignado</th>
+                                <th class="p-4">Estatus</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody" class="divide-y divide-irreal-border">
+                            <!-- Filas de usuarios -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- MODALES -->
+
+    <!-- CARRITO PÚBLICO -->
+    <div id="cartModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-irreal-cardBg border border-irreal-border w-full max-w-md rounded-2xl p-6 relative">
+            <button onclick="toggleCartModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <h3 class="text-lg font-bold text-white mb-4"><i class="fa-solid fa-bag-shopping text-irreal-orange mr-2"></i> Mi Pedido (Sucursal Centro)</h3>
+            
+            <div id="publicCartItems" class="space-y-3 max-h-60 overflow-y-auto my-4 border-y border-irreal-border py-3">
+                <!-- Items del carrito -->
+            </div>
+
+            <div class="flex justify-between items-center text-sm font-bold text-white my-4">
+                <span>Total a Pagar:</span>
+                <span id="publicCartTotal" class="text-xl text-irreal-gold">$0.00 MXN</span>
+            </div>
+
+            <button onclick="checkoutPublicOrder()" class="w-full bg-gradient-to-r from-irreal-orange to-irreal-fire text-white font-bold py-3 rounded-xl hover:brightness-110 uppercase text-xs">
+                Confirmar y Mandar Pedido
+            </button>
+        </div>
+    </div>
+
+    <!-- PUNTO DE VENTA (POS EXPRESS) -->
+    <div id="posModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-irreal-cardBg border border-irreal-border w-full max-w-2xl rounded-2xl p-6 relative">
+            <button onclick="closePOSModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <h3 class="text-base font-bold text-white mb-4"><i class="fa-solid fa-cash-register text-irreal-gold mr-2"></i> Caja Express / Registro de Venta</h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-2">
+                    <p class="text-xs font-bold text-gray-400">Seleccionar Producto:</p>
+                    <div id="posProductsList" class="space-y-1.5 max-h-60 overflow-y-auto pr-1">
+                        <!-- Productos del POS -->
+                    </div>
+                </div>
+
+                <div class="bg-black/40 border border-irreal-border p-4 rounded-xl flex flex-col justify-between">
+                    <div>
+                        <p class="text-xs font-bold text-gray-400 mb-2 border-b border-irreal-border pb-1">Ticket de Compra</p>
+                        <div id="posCartList" class="space-y-1.5 max-h-36 overflow-y-auto text-xs text-gray-300">
+                            <!-- Items agregados al ticket -->
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-irreal-border mt-2">
+                        <div class="flex justify-between font-bold text-white mb-3">
+                            <span>Total:</span>
+                            <span id="posTotal" class="text-irreal-gold text-base">$0.00 MXN</span>
+                        </div>
+                        <button onclick="completePOSSale()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-black py-2.5 rounded-xl text-xs uppercase transition-all">
+                            Cobrar Venta
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* DATOS REALISTAS DE SUCURSAL UNICA DE POLLO AL CARBÓN */
+        let menuProducts = [
+            { id: 1, sku: 'PI-001', name: 'Pollo Entero al Carbón', category: 'Pollos', price: 220.00, stock: 18, minStock: 5, img: 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=400&q=80' },
+            { id: 2, sku: 'PI-002', name: 'Medio Pollo al Carbón', category: 'Pollos', price: 120.00, stock: 12, minStock: 4, img: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&fit=crop&w=400&q=80' },
+            { id: 3, sku: 'PI-003', name: 'Paquete Familiar (2 Pollos + Complementos)', category: 'Paquetes', price: 480.00, stock: 8, minStock: 3, img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=400&q=80' },
+            { id: 4, sku: 'PI-004', name: 'Papas Galeana Asadas', category: 'Complementos', price: 55.00, stock: 3, minStock: 6, img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=400&q=80' },
+            { id: 5, sku: 'PI-005', name: 'Refresco 1.5L', category: 'Bebidas', price: 45.00, stock: 15, minStock: 5, img: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=400&q=80' },
+            { id: 6, sku: 'PI-006', name: 'Salsa Especial 250ml', category: 'Complementos', price: 35.00, stock: 0, minStock: 5, img: 'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=400&q=80' }
+        ];
+
+        let salesHistory = [
+            { id: 'FOL-101', time: '13:15', customer: 'Pedro Gómez', type: 'Mostrador', total: 220.00, status: 'Completado' },
+            { id: 'FOL-102', time: '13:40', customer: 'Laura R.', type: 'Pide en línea', total: 480.00, status: 'Completado' },
+            { id: 'FOL-103', time: '14:05', customer: 'Sin Nombre', type: 'Mostrador', total: 120.00, status: 'En Preparación' }
+        ];
+
+        let staffUsers = [
+            { id: 1, name: 'Roberto Garza', email: 'roberto.admin@polloirreal.com', role: 'ADMINISTRADOR', status: 'Activo' },
+            { id: 2, name: 'Carmen Treviño', email: 'carmen.caja@polloirreal.com', role: 'VENDEDOR', status: 'Activo' },
+            { id: 3, name: 'Hugo López', email: 'hugo.almacen@polloirreal.com', role: 'ALMACENISTA', status: 'Activo' }
+        ];
+
+        let publicCart = [];
+        let posCart = [];
+        let trendChart = null;
+        let categoryChart = null;
+        let currentPeriod = 'daily';
+
+        /* CAMBIO DE VISTAS PRINCIPALES (SITIO PÚBLICO <-> PANEL ADMINISTRATIVO) */
+        function toggleMainView() {
+            const publicView = document.getElementById('publicWebsiteView');
+            const adminView = document.getElementById('adminPanelPage');
+            const switchText = document.getElementById('viewSwitchText');
+            const navLinks = document.getElementById('publicNavLinks');
+            const cartBtn = document.getElementById('publicCartBtn');
+
+            if(adminView.classList.contains('hidden')) {
+                publicView.classList.add('hidden');
+                adminView.classList.remove('hidden');
+                switchText.innerText = 'Ver Sitio Cliente';
+                navLinks.classList.add('hidden');
+                cartBtn.classList.add('hidden');
+                
+                applyRolePermissions();
+                initCharts();
+                renderInventoryTable();
+                renderSalesTable();
+                renderUsersTable();
+            } else {
+                showPublicSite();
+            }
+        }
+
+        function showPublicSite() {
+            document.getElementById('adminPanelPage').classList.add('hidden');
+            document.getElementById('publicWebsiteView').classList.remove('hidden');
+            document.getElementById('viewSwitchText').innerText = 'Panel Sucursal';
+            document.getElementById('publicNavLinks').classList.remove('hidden');
+            document.getElementById('publicCartBtn').classList.remove('hidden');
+        }
+
+        /* CONTROL DE ROLES ACTIVO Y VISIBLE */
+        function applyRolePermissions() {
+            const role = document.getElementById('adminRoleSelector').value;
+            const badge = document.getElementById('roleInfoBadge');
+            const banner = document.getElementById('roleAccessBanner');
+            const bannerText = document.getElementById('roleAccessBannerText');
+
+            // Hide all nav links and sections initially
+            document.querySelectorAll('.role-nav-item').forEach(el => el.classList.add('hidden'));
+
+            if(role === 'ADMIN') {
+                // Show everything
+                document.querySelectorAll('.role-nav-admin').forEach(el => el.classList.remove('hidden'));
+                badge.innerHTML = `<span class="text-emerald-400 font-bold">● ADMINISTRADOR</span><br>Acceso ilimitado a estadísticas, ventas, inventario y personal.`;
+                banner.classList.add('hidden');
+                switchAdminTab('stats');
+            } 
+            else if(role === 'VENDEDOR') {
+                // Show sales and POS
+                document.querySelectorAll('.role-nav-vendedor').forEach(el => el.classList.remove('hidden'));
+                badge.innerHTML = `<span class="text-irreal-gold font-bold">● VENDEDOR / CAJERO</span><br>Acceso exclusivo a Caja POS y Registro de Pedidos.`;
+                banner.classList.remove('hidden');
+                bannerText.innerText = 'Modo Vendedor / Cajero: Módulos de estadísticas y gestión de usuarios restringidos.';
+                switchAdminTab('sales');
+            } 
+            else if(role === 'ALMACENISTA') {
+                // Show inventory only
+                document.querySelectorAll('.role-nav-almacenista').forEach(el => el.classList.remove('hidden'));
+                badge.innerHTML = `<span class="text-sky-400 font-bold">● ALMACENISTA</span><br>Acceso enfocado a Control de Stock e Insumos.`;
+                banner.classList.remove('hidden');
+                bannerText.innerText = 'Modo Almacenista: Módulos de caja, ventas y finanzas ocultos.';
+                switchAdminTab('inventory');
+            }
+        }
+
+        function switchAdminTab(tab) {
+            document.querySelectorAll('.admin-section').forEach(s => s.classList.add('hidden'));
+            document.querySelectorAll('.admin-tab-nav').forEach(a => {
+                a.classList.remove('bg-gradient-to-r', 'from-irreal-orange/20', 'to-transparent', 'text-irreal-gold', 'border-l-4', 'border-irreal-orange');
+                a.classList.add('text-gray-400');
+            });
+
+            const targetSection = document.getElementById(`adminSec-${tab}`);
+            if(targetSection) targetSection.classList.remove('hidden');
+
+            const activeNav = document.getElementById(`adminNav-${tab}`);
+            if(activeNav) {
+                activeNav.classList.add('bg-gradient-to-r', 'from-irreal-orange/20', 'to-transparent', 'text-irreal-gold', 'border-l-4', 'border-irreal-orange');
+                activeNav.classList.remove('text-gray-400');
+            }
+        }
+
+        /* DATOS Y METRICAS REALISTAS */
+        function setAdminPeriod(period) {
+            currentPeriod = period;
+            document.querySelectorAll('#btn-period-daily, #btn-period-weekly, #btn-period-monthly').forEach(b => {
+                b.classList.remove('bg-irreal-orange', 'text-white');
+                b.classList.add('text-gray-400');
+            });
+            document.getElementById(`btn-period-${period}`).classList.add('bg-irreal-orange', 'text-white');
+
+            const kpiTotal = document.getElementById('kpiSalesTotal');
+            const kpiOrders = document.getElementById('kpiOrdersCount');
+            const kpiTicket = document.getElementById('kpiTicketAvg');
+            const kpiTop = document.getElementById('kpiTopSeller');
+            const kpiSub = document.getElementById('kpiSalesSubtext');
+            const kpiTopSub = document.getElementById('kpiTopSubtext');
+            const chartTitle = document.getElementById('chartTitle');
+
+            if(period === 'daily') {
+                kpiTotal.innerText = '$3,450.00 MXN';
+                kpiOrders.innerText = '18 Pedidos';
+                kpiTicket.innerText = '$191.66 MXN';
+                kpiTop.innerText = 'Pollo Entero al Carbón';
+                kpiSub.innerText = 'Cierre estimado del día';
+                kpiTopSub.innerText = '11 unidades vendidas hoy';
+                chartTitle.innerText = 'Comportamiento de Ventas Diarias por Hora ($ MXN)';
+
+                if(trendChart) {
+                    trendChart.data.labels = ['12:00', '14:00', '16:00', '18:00', '20:00'];
+                    trendChart.data.datasets[0].data = [440, 1100, 780, 650, 480];
+                    trendChart.update();
+                }
+            } else if(period === 'weekly') {
+                kpiTotal.innerText = '$24,150.00 MXN';
+                kpiOrders.innerText = '126 Pedidos';
+                kpiTicket.innerText = '$191.66 MXN';
+                kpiTop.innerText = 'Pollo Entero al Carbón';
+                kpiSub.innerText = 'Promedio semanal constante';
+                kpiTopSub.innerText = '75 unidades en la semana';
+                chartTitle.innerText = 'Ventas Diarias de la Semana ($ MXN)';
+
+                if(trendChart) {
+                    trendChart.data.labels = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+                    trendChart.data.datasets[0].data = [2800, 3100, 2900, 3450, 4200, 4100, 3600];
+                    trendChart.update();
+                }
+            } else if(period === 'monthly') {
+                kpiTotal.innerText = '$98,400.00 MXN';
+                kpiOrders.innerText = '510 Pedidos';
+                kpiTicket.innerText = '$192.94 MXN';
+                kpiTop.innerText = 'Paquete Familiar';
+                kpiSub.innerText = 'Mes actual en curso';
+                kpiTopSub.innerText = '180 paquetes vendidos';
+                chartTitle.innerText = 'Consolidado por Semanas del Mes ($ MXN)';
+
+                if(trendChart) {
+                    trendChart.data.labels = ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'];
+                    trendChart.data.datasets[0].data = [23500, 24150, 25200, 25550];
+                    trendChart.update();
+                }
+            }
+        }
+
+        function initCharts() {
+            if(trendChart) return;
+
+            const ctx1 = document.getElementById('branchSalesChart').getContext('2d');
+            trendChart = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: ['12:00', '14:00', '16:00', '18:00', '20:00'],
+                    datasets: [{
+                        label: 'Ventas ($)',
+                        data: [440, 1100, 780, 650, 480],
+                        borderColor: '#ff5500',
+                        backgroundColor: 'rgba(255, 85, 0, 0.15)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { grid: { color: '#2a2828' }, ticks: { color: '#9ca3af' } },
+                        x: { grid: { display: false }, ticks: { color: '#9ca3af' } }
+                    }
+                }
+            });
+
+            const ctx2 = document.getElementById('branchCategoryChart').getContext('2d');
+            categoryChart = new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Pollos', 'Paquetes', 'Complementos'],
+                    datasets: [{
+                        data: [60, 25, 15],
+                        backgroundColor: ['#ff5500', '#ffaa00', '#eab308'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    cutout: '70%'
+                }
+            });
+        }
+
+        /* PUBLIC SITE LOGIC */
+        function renderPublicMenu(category = 'ALL') {
+            const grid = document.getElementById('publicMenuGrid');
+            grid.innerHTML = '';
+
+            menuProducts.forEach(prod => {
+                if(category !== 'ALL' && prod.category !== category) return;
+
+                const card = document.createElement('div');
+                card.className = 'bg-irreal-cardBg border border-irreal-border rounded-2xl overflow-hidden hover:border-irreal-orange/50 transition-all flex flex-col justify-between';
+                card.innerHTML = `
+                    <div>
+                        <div class="h-40 bg-black/50 relative overflow-hidden">
+                            <img src="${prod.img}" alt="${prod.name}" class="w-full h-full object-cover">
+                            <span class="absolute top-2 right-2 bg-black/70 text-irreal-gold text-[10px] font-bold px-2 py-0.5 rounded border border-irreal-border">${prod.category}</span>
+                        </div>
+                        <div class="p-4">
+                            <h4 class="font-bold text-white text-sm">${prod.name}</h4>
+                            <p class="text-xs text-gray-400 mt-1">${prod.stock > 0 ? 'Disponible en Sucursal Centro' : 'Agotado por el momento'}</p>
+                        </div>
+                    </div>
+                    <div class="p-4 pt-0 flex items-center justify-between">
+                        <span class="font-black text-irreal-gold text-lg">$${prod.price.toFixed(2)} MXN</span>
+                        <button onclick="addToPublicCart('${prod.name}', ${prod.price})" ${prod.stock === 0 ? 'disabled' : ''} class="bg-irreal-orange hover:bg-irreal-fire disabled:opacity-40 text-white font-bold text-xs px-3 py-1.5 rounded-xl transition-all">
+                            ${prod.stock > 0 ? '+ Agregar' : 'Agotado'}
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterPublicMenu(cat) {
+            renderPublicMenu(cat);
+        }
+
+        function addToPublicCart(name, price) {
+            const item = publicCart.find(i => i.name === name);
+            if(item) {
+                item.qty++;
+            } else {
+                publicCart.push({ name, price, qty: 1 });
+            }
+            updateCartBadge();
+        }
+
+        function updateCartBadge() {
+            const count = publicCart.reduce((a, b) => a + b.qty, 0);
+            document.getElementById('cartBadgeCount').innerText = count;
+        }
+
+        function toggleCartModal() {
+            const modal = document.getElementById('cartModal');
+            modal.classList.toggle('hidden');
+            if(!modal.classList.contains('hidden')) {
+                renderCartItems();
+            }
+        }
+
+        function renderCartItems() {
+            const container = document.getElementById('publicCartItems');
+            container.innerHTML = '';
+            let total = 0;
+
+            if(publicCart.length === 0) {
+                container.innerHTML = `<p class="text-gray-500 text-center py-4 text-xs">Tu carrito está vacío</p>`;
+                document.getElementById('publicCartTotal').innerText = '$0.00 MXN';
+                return;
+            }
+
+            publicCart.forEach(item => {
+                total += item.price * item.qty;
+                const div = document.createElement('div');
+                div.className = 'flex justify-between items-center text-xs text-gray-200';
+                div.innerHTML = `
+                    <div>
+                        <span class="font-bold text-white">${item.name}</span>
+                        <div class="text-gray-400">$${item.price.toFixed(2)} MXN c/u</div>
+                    </div>
+                    <div class="font-bold text-irreal-gold">x${item.qty} = $${(item.price * item.qty).toFixed(2)} MXN</div>
+                `;
+                container.appendChild(div);
+            });
+
+            document.getElementById('publicCartTotal').innerText = `$${total.toFixed(2)} MXN`;
+        }
+
+        function checkoutPublicOrder() {
+            if(publicCart.length === 0) return;
+            alert('¡Pedido registrado correctamente en la Sucursal Centro!');
+            publicCart = [];
+            updateCartBadge();
+            toggleCartModal();
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        /* TABLAS Y TABLEROS DE ADMINISTRACIÓN */
+        function renderInventoryTable() {
+            const tbody = document.getElementById('inventoryTableBody');
+            tbody.innerHTML = '';
+            const search = document.getElementById('invSearchInput').value.toLowerCase();
+
+            menuProducts.forEach(prod => {
+                if(search && !prod.name.toLowerCase().includes(search)) return;
+
+                let badge = `<span class="bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold">Disponible</span>`;
+                if(prod.stock === 0) badge = `<span class="bg-red-500/10 text-red-400 px-2 py-0.5 rounded font-bold">Agotado</span>`;
+                else if(prod.stock <= prod.minStock) badge = `<span class="bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded font-bold">Stock Bajo</span>`;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-4 font-mono font-bold text-irreal-gold">${prod.sku}</td>
+                    <td class="p-4 font-bold text-white">${prod.name}</td>
+                    <td class="p-4">${prod.category}</td>
+                    <td class="p-4 font-bold">$${prod.price.toFixed(2)} MXN</td>
+                    <td class="p-4 text-center font-bold ${prod.stock <= prod.minStock ? 'text-red-400' : 'text-emerald-400'}">${prod.stock}</td>
+                    <td class="p-4 text-center text-gray-500">${prod.minStock}</td>
+                    <td class="p-4">${badge}</td>
+                    <td class="p-4 text-right">
+                        <button onclick="adjustStock(${prod.id}, 5)" class="bg-irreal-border hover:bg-irreal-orange text-white px-2 py-1 rounded text-xs transition-all">+5 Unidades</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function adjustStock(id, qty) {
+            const prod = menuProducts.find(p => p.id === id);
+            if(prod) {
+                prod.stock += qty;
+                renderInventoryTable();
+                renderPublicMenu();
+            }
+        }
+
+        function renderSalesTable() {
+            const tbody = document.getElementById('salesTableBody');
+            tbody.innerHTML = '';
+
+            salesHistory.forEach(sale => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-4 font-mono font-bold text-irreal-gold">${sale.id}</td>
+                    <td class="p-4 text-gray-400">${sale.time}</td>
+                    <td class="p-4 font-bold text-white">${sale.customer}</td>
+                    <td class="p-4">${sale.type}</td>
+                    <td class="p-4 font-bold text-white">$${sale.total.toFixed(2)} MXN</td>
+                    <td class="p-4"><span class="bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold">${sale.status}</span></td>
+                    <td class="p-4 text-right">
+                        <button onclick="toggleSaleStatus('${sale.id}')" class="bg-irreal-border hover:bg-irreal-hoverBg text-white px-2 py-1 rounded text-[10px]">Cambiar Estado</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function toggleSaleStatus(id) {
+            const sale = salesHistory.find(s => s.id === id);
+            if(sale) {
+                sale.status = sale.status === 'Completado' ? 'En Preparación' : 'Completado';
+                renderSalesTable();
+            }
+        }
+
+        function renderUsersTable() {
+            const tbody = document.getElementById('usersTableBody');
+            tbody.innerHTML = '';
+
+            staffUsers.forEach(u => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-4 font-bold text-white">${u.name}</td>
+                    <td class="p-4 text-gray-400">${u.email}</td>
+                    <td class="p-4"><span class="bg-irreal-orange/10 text-irreal-gold px-2 py-0.5 rounded font-bold text-[10px]">${u.role}</span></td>
+                    <td class="p-4 text-emerald-400 font-bold">${u.status}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        /* FUNCIONES DE CAJA POS */
+        function openPOSModal() {
+            document.getElementById('posModal').classList.remove('hidden');
+            renderPOSProducts();
+        }
+
+        function closePOSModal() {
+            document.getElementById('posModal').classList.add('hidden');
+        }
+
+        function renderPOSProducts() {
+            const list = document.getElementById('posProductsList');
+            list.innerHTML = '';
+
+            menuProducts.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'p-2 bg-black/40 border border-irreal-border hover:border-irreal-orange rounded-lg flex justify-between items-center cursor-pointer text-xs';
+                div.onclick = () => addToPOS(p);
+                div.innerHTML = `<span>${p.name}</span> <strong class="text-irreal-gold">$${p.price}</strong>`;
+                list.appendChild(div);
+            });
+        }
+
+        function addToPOS(p) {
+            const exist = posCart.find(i => i.id === p.id);
+            if(exist) exist.qty++;
+            else posCart.push({ ...p, qty: 1 });
+            renderPOSCart();
+        }
+
+        function renderPOSCart() {
+            const container = document.getElementById('posCartList');
+            container.innerHTML = '';
+            let total = 0;
+
+            posCart.forEach(i => {
+                total += i.price * i.qty;
+                const div = document.createElement('div');
+                div.className = 'flex justify-between items-center';
+                div.innerHTML = `<span>${i.name} (x${i.qty})</span> <strong>$${(i.price * i.qty).toFixed(2)}</strong>`;
+                container.appendChild(div);
+            });
+
+            document.getElementById('posTotal').innerText = `$${total.toFixed(2)} MXN`;
+        }
+
+        function completePOSSale() {
+            if(posCart.length === 0) return;
+            const total = posCart.reduce((a, b) => a + (b.price * b.qty), 0);
+            
+            salesHistory.unshift({
+                id: `FOL-${Math.floor(100 + Math.random() * 900)}`,
+                time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+                customer: 'Venta Mostrador',
+                type: 'Mostrador',
+                total: total,
+                status: 'Completado'
+            });
+
+            posCart = [];
+            closePOSModal();
+            renderSalesTable();
+        }
+
+        window.onload = function() {
+            renderPublicMenu();
+        };
+    </script>
+</body>
+</html>
